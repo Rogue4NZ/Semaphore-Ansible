@@ -1,7 +1,15 @@
 ---
-- hosts: web_servers
+- hosts: ubuntu_servers
   become: true
   tasks:
-    - name: Print OS info
-      ansible.builtin.package:
-        name: apache2
+    - name: Update apt package index
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Upgrade all installed packages
+      ansible.builtin.apt:
+        upgrade: dist
+
+    - name: Remove unused packages
+      ansible.builtin.apt:
+        autoremove: yes
